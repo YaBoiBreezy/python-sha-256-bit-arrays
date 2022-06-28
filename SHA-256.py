@@ -44,8 +44,8 @@ def plus(arr1,arr2):
     carry=0
     for x in range(31, -1, -1):
         r = carry+arr1[x]+arr2[x]
-        ret[x] = (1 if r % 2 == 1 else 0)
-        carry = 0 if r < 2 else 1
+        ret[x] = int(r%2==1)
+        carry = int(r>=2)
     return ret
 
 if __name__ == "__main__":
