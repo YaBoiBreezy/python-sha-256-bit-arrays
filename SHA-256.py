@@ -52,27 +52,14 @@ def generate_hash(input):
     h7 = [0,1,0,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,0,1]
 
     # Prepare message schedule
-    message_schedule = []
-    for t in range(0, 64):
-        if t <= 15:
-            message_schedule.append(input[t*32:(t*32)+32]))
-            
-            
-            
-            
+    w = []
+    for i in range(0, 64):
+        if i <= 15:
+            w.append(input[i*32:(i*32)+32]))
         else:
-            term1 = _sigma1(int.from_bytes(message_schedule[t-2], 'big'))
-            term2 = int.from_bytes(message_schedule[t-7], 'big')
-            term3 = _sigma0(int.from_bytes(message_schedule[t-15], 'big'))
-            term4 = int.from_bytes(message_schedule[t-16], 'big')
-
-            # append a 4-byte byte object
-            schedule = ((term1 + term2 + term3 + term4) % 2**32).to_bytes(4, 'big')
-            message_schedule.append(schedule)
-
-    assert len(message_schedule) == 64
-
-    # Initialize working variables
+            s0=xor(xor(rightRotate(w[i-15],7),rightRotate(w[i-15],18)),rightShift(w[i-15],3)
+            s1=xor(xor(rightRotate(w[i-2],17),rightRotate(w[i-2],19)),rightShift(w[i-2],10)
+            w.append(adder(adder(adder(w[i-16],s0),w[i-7]),s1)))
     a = h0
     b = h1
     c = h2
@@ -82,9 +69,16 @@ def generate_hash(input):
     g = h6
     h = h7
 
-        # Iterate for t=0 to 63
-        for t in range(64):
-            t1 = ((h + _capsigma1(e) + _ch(e, f, g) + K[t] +
+    for i in range(64):
+        
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   t1 = ((h + _capsigma1(e) + _ch(e, f, g) + K[t] +
                    int.from_bytes(message_schedule[t], 'big')) % 2**32)
 
             t2 = (_capsigma0(a) + _maj(a, b, c)) % 2**32
