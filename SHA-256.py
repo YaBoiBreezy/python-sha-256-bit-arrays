@@ -51,37 +51,36 @@ def generate_hash(input):
     h6 = [0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,1,1,0,0,1,1,0,1,0,1,0,1,1]
     h7 = [0,1,0,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,0,1]
 
-    # SHA-256 Hash Computation
-    for message_block in blocks:
-        # Prepare message schedule
-        message_schedule = []
-        for t in range(0, 64):
-            if t <= 15:
-                # adds the t'th 32 bit word of the block,
-                # starting from leftmost word
-                # 4 bytes at a time
-                message_schedule.append(bytes(message_block[t*4:(t*4)+4]))
-            else:
-                term1 = _sigma1(int.from_bytes(message_schedule[t-2], 'big'))
-                term2 = int.from_bytes(message_schedule[t-7], 'big')
-                term3 = _sigma0(int.from_bytes(message_schedule[t-15], 'big'))
-                term4 = int.from_bytes(message_schedule[t-16], 'big')
+    # Prepare message schedule
+    message_schedule = []
+    for t in range(0, 64):
+        if t <= 15:
+            message_schedule.append(input[t*32:(t*32)+32]))
+            
+            
+            
+            
+        else:
+            term1 = _sigma1(int.from_bytes(message_schedule[t-2], 'big'))
+            term2 = int.from_bytes(message_schedule[t-7], 'big')
+            term3 = _sigma0(int.from_bytes(message_schedule[t-15], 'big'))
+            term4 = int.from_bytes(message_schedule[t-16], 'big')
 
-                # append a 4-byte byte object
-                schedule = ((term1 + term2 + term3 + term4) % 2**32).to_bytes(4, 'big')
-                message_schedule.append(schedule)
+            # append a 4-byte byte object
+            schedule = ((term1 + term2 + term3 + term4) % 2**32).to_bytes(4, 'big')
+            message_schedule.append(schedule)
 
-        assert len(message_schedule) == 64
+    assert len(message_schedule) == 64
 
-        # Initialize working variables
-        a = h0
-        b = h1
-        c = h2
-        d = h3
-        e = h4
-        f = h5
-        g = h6
-        h = h7
+    # Initialize working variables
+    a = h0
+    b = h1
+    c = h2
+    d = h3
+    e = h4
+    f = h5
+    g = h6
+    h = h7
 
         # Iterate for t=0 to 63
         for t in range(64):
@@ -99,20 +98,19 @@ def generate_hash(input):
             b = a
             a = (t1 + t2) % 2**32
 
-        # Compute intermediate hash value
-        h0 = (h0 + a) % 2**32
-        h1 = (h1 + b) % 2**32
-        h2 = (h2 + c) % 2**32
-        h3 = (h3 + d) % 2**32
-        h4 = (h4 + e) % 2**32
-        h5 = (h5 + f) % 2**32
-        h6 = (h6 + g) % 2**32
-        h7 = (h7 + h) % 2**32
-
-    return ((h0).to_bytes(4, 'big') + (h1).to_bytes(4, 'big') +
-            (h2).to_bytes(4, 'big') + (h3).to_bytes(4, 'big') +
-            (h4).to_bytes(4, 'big') + (h5).to_bytes(4, 'big') +
-            (h6).to_bytes(4, 'big') + (h7).to_bytes(4, 'big'))
+            
+            
+            
+            
+    h0 = plus(h0,a)
+    h1 = plus(h1,b)
+    h2 = plus(h2,c)
+    h3 = plus(h3,d)
+    h4 = plus(h4,e)
+    h5 = plus(h5,f)
+    h6 = plus(h6,g)
+    h7 = plus(h7,h)
+    return h0+h1+h2+h3+h4+h5+h6+h7
     
 #basic rotation
 def rightRotate(arr,dist):
