@@ -3,11 +3,11 @@
 #main function, takes array of size 512 of numbers 1 or 0
 def generate_hash(input):
     if len(input)!=512:
-        return False
+        return 'BAD_LENGTH'
     for x in range(512):
         input[x]=int(input[x])
         if input[x]!=0 and input[x]!=1:
-            return False
+            return 'BAD_VALUE_AT_INDEX: '+str(x)
         
     K = [[0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1], 
          [1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1], [1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1], 
@@ -52,14 +52,14 @@ def generate_hash(input):
     h7 = [0,1,0,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,0,1]
 
     # Prepare message schedule
-    w = []
+    W = []
     for i in range(0, 64):
         if i <= 15:
-            w.append([input[i*32:(i*32)+32]])
+            W.append(input[i*32:(i*32)+32])
         else:
-            s0=xor(xor(rightRotate(w[i-15],7),rightRotate(w[i-15],18)),rightShift(w[i-15],3))
-            s1=xor(xor(rightRotate(w[i-2],17),rightRotate(w[i-2],19)),rightShift(w[i-2],10))
-            w.append(plus(plus(plus(w[i-16],s0),w[i-7]),s1)))
+            s0=xor(xor(rightRotate(W[i-15],7),rightRotate(W[i-15],18)),rightShift(W[i-15],3))
+            s1=xor(xor(rightRotate(W[i-2],17),rightRotate(W[i-2],19)),rightShift(W[i-2],10))
+            W.append(plus(plus(plus(W[i-16],s0),W[i-7]),s1))
     a = h0
     b = h1
     c = h2
@@ -70,9 +70,9 @@ def generate_hash(input):
     h = h7
 
     for i in range(64):
-        S1=xor(xor(rightRotate(e,6),rightRotate(e,11))rightRotate(e,25))
+        S1=xor(xor(rightRotate(e,6),rightRotate(e,11)),rightRotate(e,25))
         ch=xor(ander(e,f),ander(noter(e),g))
-        temp1=plus(plus(plus(plus(h,S1),ch),k[i]),w[i])
+        temp1=plus(plus(plus(plus(h,S1),ch),K[i]),W[i])
         S0=xor(xor(rightRotate(a,2),rightRotate(a,13)),rightRotate(a,22))
         maj=xor(xor(ander(a,b),ander(a,c)),ander(b,c))
         temp2=ander(s0,maj) 
@@ -109,7 +109,7 @@ def rightShift(arr,dist):
     return ret
     
 #invert every value
-def noter(arr,dist):
+def noter(arr):
     ret=[]
     for x in range (32):
         ret.append(1-arr[x])
@@ -142,7 +142,13 @@ def plus(arr1,arr2):
 if __name__ == "__main__":
     print(rightRotate([0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
     print(rightShift([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
-    print(noter([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
-    print(xor([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
-    print(ander([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
-    print(plus([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
+    print(noter([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1]))
+    print(xor([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],[0,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,0,0,1,1,1,1,1,0,1]))
+    print(ander([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1]))
+    print(plus([0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],[0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1]))
+    hello_world=[0,1,1,0,1,0,0,0,0,1,1,0,0,1,0,1,0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1,1,1,1,0,0,1,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,1,0,1,1,1,0,0,1,0,0,1,1,0,1,1,0,0,0,1,1,0,0,1,0,0]
+    hello_world.append(1)
+    while(len(hello_world)<512-8):
+        hello_world.append(0)
+    hello_world+=[0,1,0,1,1,0,0,0]
+    print(generate_hash(hello_world))
