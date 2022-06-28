@@ -70,40 +70,32 @@ def generate_hash(input):
     h = h7
 
     for i in range(64):
-        
-                   
-                   
-                   
-                   
-                   
-                   
-                   
-                   t1 = ((h + _capsigma1(e) + _ch(e, f, g) + K[t] +
-                   int.from_bytes(message_schedule[t], 'big')) % 2**32)
-
-            t2 = (_capsigma0(a) + _maj(a, b, c)) % 2**32
-
-            h = g
-            g = f
-            f = e
-            e = (d + t1) % 2**32
-            d = c
-            c = b
-            b = a
-            a = (t1 + t2) % 2**32
-
+        S1=xor(xor(rightRotate(e,6),rightRotate(e,11))rightRotate(e,25))
+        ch=xor(ander(e,f),ander(noter(e),g))
+        temp1=h+S1+ch+k[i]+w[i]
+                   S0=xor(xor(rightRotate(a,2),rightRotate(a,13)),rightRotate(a,22))
+                   maj=xor(xor(ander(a,b),ander(a,c)),ander(b,c))
+                   temp2=ander(s0,maj) 
+        h = g
+        g = f
+        f = e
+        e = adder(d,temp1)
+        d = c
+        c = b
+        b = a
+        a = adder(temp1,temp2)
             
             
             
             
-    h0 = plus(h0,a)
-    h1 = plus(h1,b)
-    h2 = plus(h2,c)
-    h3 = plus(h3,d)
-    h4 = plus(h4,e)
-    h5 = plus(h5,f)
-    h6 = plus(h6,g)
-    h7 = plus(h7,h)
+    h0 = adder(h0,a)
+    h1 = adder(h1,b)
+    h2 = adder(h2,c)
+    h3 = adder(h3,d)
+    h4 = adder(h4,e)
+    h5 = adder(h5,f)
+    h6 = adder(h6,g)
+    h7 = adder(h7,h)
     return h0+h1+h2+h3+h4+h5+h6+h7
     
 #basic rotation
