@@ -12,6 +12,10 @@ def rightRotate(arr,dist):
     
 #shift over, leave 0's in wake
 def rightShift(arr,dist):
+    for x in range (31,dist,-1):
+        arr[x]=arr[x-dist]
+    for x in range (dist):
+        arr[x]=0
     
 #invert every value
 def noter(arr,dist):
@@ -27,3 +31,4 @@ def plus(arr1,arr2):
 
 if __name__ == "__main__":
     print(rightRotate([0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
+    print(rightShift([1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
