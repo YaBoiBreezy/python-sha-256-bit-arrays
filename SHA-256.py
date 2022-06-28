@@ -5,6 +5,10 @@ def generate_hash(input):
     
 #basic rotation
 def rightRotate(arr,dist):
+    for x in range (32):
+        hold=arr[(x+dist)%32]
+        arr[(x+dist)%32]=arr[x%32]
+        arr[x%32]=hold
     
 #shift over, leave 0's in wake
 def rightShift(arr,dist):
@@ -22,4 +26,4 @@ def ander(arr1,arr2):
 def plus(arr1,arr2):
 
 if __name__ == "__main__":
-    print(generate_hash("hello").hex())
+    print(rightRotate([0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1],2))
