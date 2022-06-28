@@ -28,7 +28,7 @@ def noter(arr,dist):
 def xor(arr1,arr2):
     ret=[]
     for x in range (32):
-        ret.append(1 if arr1[x]==arr2[x] else 0)
+        ret.append(int(arr1[x]!=arr2[x]))
     return ret
     
 #apply and to every pair of bits
