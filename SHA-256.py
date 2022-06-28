@@ -1,7 +1,14 @@
 #this is the main file
 
-#main function, takes array of size 512 of numbers 0 <= num <= 1. I DO NOT verify inputs, that is your problem. This code is meant to be lightweight. Good luck
+#main function, takes array of size 512 of numbers 1 or 0
 def generate_hash(input):
+    if len(input)!=512:
+        return False
+    for x in range(512):
+        input[x]=int(input[x])
+        if input[x]!=0 and input[x]!=1:
+            return False
+        
     K = [[0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1], 
          [1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1], [1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1], 
          [0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1], [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1], 
@@ -35,42 +42,14 @@ def generate_hash(input):
          [1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0], [1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1], 
          [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1], [1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0]]
 
-def generate_hash(message: bytearray) -> bytearray:
-    """Return a SHA-256 hash from the message passed.
-    The argument should be a bytes, bytearray, or
-    string object."""
-
-    if isinstance(message, str):
-        message = bytearray(message, 'ascii')
-    elif isinstance(message, bytes):
-        message = bytearray(message)
-    elif not isinstance(message, bytearray):
-        raise TypeError
-
-    # Padding
-    length = len(message) * 8 # len(message) is number of BYTES!!!
-    message.append(0x80)
-    while (len(message) * 8 + 64) % 512 != 0:
-        message.append(0x00)
-
-    message += length.to_bytes(8, 'big') # pad to 8 bytes or 64 bits
-
-    assert (len(message) * 8) % 512 == 0, "Padding did not complete properly!"
-
-    # Parsing
-    blocks = [] # contains 512-bit chunks of message
-    for i in range(0, len(message), 64): # 64 bytes is 512 bits
-        blocks.append(message[i:i+64])
-
-    # Setting Initial Hash Value
-    h0 = 0x6a09e667
-    h1 = 0xbb67ae85
-    h2 = 0x3c6ef372
-    h3 = 0xa54ff53a
-    h5 = 0x9b05688c
-    h4 = 0x510e527f
-    h6 = 0x1f83d9ab
-    h7 = 0x5be0cd19
+    h0 = [0,1,1,0,1,0,1,0,0,0,0,0,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1]
+    h1 = [1,0,1,1,1,0,1,1,0,1,1,0,0,1,1,1,1,0,1,0,1,1,1,0,1,0,0,0,0,1,0,1]
+    h2 = [0,0,1,1,1,1,0,0,0,1,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,1,1,1,0,0,1,0]
+    h3 = [1,0,1,0,0,1,0,1,0,1,0,0,1,1,1,1,1,1,1,1,0,1,0,1,0,0,1,1,1,0,1,0]
+    h5 = [1,0,0,1,1,0,1,1,0,0,0,0,0,1,0,1,0,1,1,0,1,0,0,0,1,0,0,0,1,1,0,0]
+    h4 = [0,1,0,1,0,0,0,1,0,0,0,0,1,1,1,0,0,1,0,1,0,0,1,0,0,1,1,1,1,1,1,1]
+    h6 = [0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,1,1,0,0,1,1,0,1,0,1,0,1,1]
+    h7 = [0,1,0,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,0,1]
 
     # SHA-256 Hash Computation
     for message_block in blocks:
