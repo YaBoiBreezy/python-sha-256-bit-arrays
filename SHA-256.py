@@ -35,7 +35,7 @@ def xor(arr1,arr2):
 def ander(arr1,arr2):
     ret=[]
     for x in range (32):
-        ret.append(1 if arr1[x] or arr2[x] else 0)
+        ret.append(1 if arr1[x] and arr2[x] else 0)
     return ret
     
 #binary addition, discard overflow
