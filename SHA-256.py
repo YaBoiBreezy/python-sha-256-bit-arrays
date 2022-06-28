@@ -1,6 +1,6 @@
 #this is the main file
 
-#main function, takes array of size <= 512 of numbers 0 <= num <= 1
+#main function, takes array of size 512 of numbers 0 <= num <= 1. I DO NOT verify inputs, that is your problem. This code is meant to be lightweight. Good luck
 def generate_hash(input):
     
 #basic rotation
