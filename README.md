@@ -17,7 +17,7 @@ There are no dependencies. It works on windows.<br/>
 ## Built With
 
 notepad and powershell 😎 <br/>
-I'm not kidding. Thanks University for teaching me good habits
+I'm not kidding. Thanks university for teaching me good habits
 
 ## Contributing
 
@@ -33,5 +33,5 @@ Anyone can use it
 
 ## Acknowledgments
 
-Big thanks to this blog for giving a setp by step runthrough, troubleshooting would have been even more horrible without it: <br/>
+Big thanks to this blog for giving a step by step walkthrough, troubleshooting would have been even more horrible without it: <br/>
 https://blog.boot.dev/cryptography/how-sha-2-works-step-by-step-sha-256/
