@@ -17,7 +17,7 @@ There are no dependencies. It works on windows.<br/>
 
 ## Built With
 
-notepad and powershell 😎
+notepad and powershell 😎 <br/>
 I'm not kidding. Thanks University for teaching me good habits
 
 ## Contributing
