@@ -6,7 +6,6 @@ The purpose of this project was to implement SHA-256 in a way that allows people
 This project uses an integer in an array for each individual bit, allowing all the data and logic to be clearly seen
 
 ## Getting Started
-
 There are 2 files:<br/>
 SHA-256.py takes a formatted input (array of length 512, containing only 1 and 0), which should be sufficient for cryptocurrency applications.<br/>
 SHA-256-LARGE.py takes a string input and runs a compression loop on it before parsing, like normal SHA-256.
