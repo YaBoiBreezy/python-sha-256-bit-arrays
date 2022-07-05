@@ -1,4 +1,4 @@
-#this is the main file
+#Full version of SHA-256, takes a string of any length and computes the hash
 
 #main function, takes string
 def generate_hash(input):
