@@ -1,4 +1,4 @@
-#this is the main file
+#Basic SHA-256 program, takes an array of length 512 of 1/0 only. Designed for crypto hashing, if you want to hash strings use the other one
 
 #main function, takes array of size 512 of numbers 1 or 0
 def generate_hash(input):
