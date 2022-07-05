@@ -1,4 +1,6 @@
 #SHA-256 basic, last 3 operation functions altered to handle probabilities instead of binaries (0.56=56% chance of being 1, 44% change of being 0)
+#(Running with [0, 0.5, 0.5, ...], then 0->1, get diff of results, use to predict result of hashes for faster A* search)
+#Sadly, could not generate hash collisions using this method. Its predictive powers are 0% better than random :(
 
 #main function, takes array of size 512 of numbers 0<=x<=1
 def generate_hash(inp):
@@ -139,7 +141,7 @@ def plus(arr1,arr2):
     ret=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     carry=0
     for x in range(31, -1, -1):
-        r = carry+arr1[x]+arr2[x]
+        r = carry+arr1[x]+arr2[x] #P(ret[x]=1) is based on arr1[x], arr2[x], carry. This gets P(exactly 1/2/3 of them are "1")
         P1=(carry*(1-arr1[x])*(1-arr2[x]))+((1-carry)*arr1[x]*(1-arr2[x]))+((1-carry)*(1-arr1[x])*arr2[x])
         P2=(carry*arr1[x]*(1-arr2[x]))+(carry*(1-arr1[x])*arr2[x])+((1-carry)*arr1[x]*arr2[x])
         P3=carry*arr1[x]*arr2[x]
