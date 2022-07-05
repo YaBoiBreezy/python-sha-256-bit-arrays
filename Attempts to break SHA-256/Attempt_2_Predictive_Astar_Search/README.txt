@@ -9,7 +9,7 @@ The resulting JSON is used by the other scripts
 
 A* search for SHA-256, but instead of hashing for all 512 or 512^2 possible bitflips, uses
 pregenerated expected result (see SHA-256-PROBABILITIES), then ranks based on that.
-This lets it has once per generation, not 512 or 512^2 times.
+This lets it hash once per generation, not 512 or 512^2 times.
 
 These A* searches weren't performing well, so L1Stats tracks their progress. 
 As can be seen from running this program (Basically L1 with extra data logging),
