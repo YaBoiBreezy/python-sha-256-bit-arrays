@@ -1,10 +1,11 @@
 #First attempt to break SHA-256 by making an A* search algorithm:
+
 #While not done:
 #  Take best value
 #  For each bit in value:
 #    Flip bit, hash new value, compare to goal, sort into list
-#Conclusion: This does not tend towards goal, due to SHA-256 
-#avalanche effect being good. No better than random guessing.
+
+#Conclusion: This does not tend towards goal, due to SHA-256 avalanche effect being good. No better than random guessing.
 
 import random
 import hashlib
