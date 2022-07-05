@@ -1,6 +1,6 @@
 #A* search for SHA-256, but instead of hashing for all 512 possible bitflips, uses
 #pregenerated expected result (see SHA-256-PROBABILITIES), then ranks based on that.
-#This lets it has once per generation, not 512 times.
+#This lets it hash once per generation, not 512 times.
 
 import random
 import hashlib
