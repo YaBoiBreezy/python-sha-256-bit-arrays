@@ -1,5 +1,5 @@
 #SHA-256 basic, last 3 operation functions altered to handle probabilities instead of binaries (0.56=56% chance of being 1, 44% change of being 0)
-#(Running with [0, 0.5, 0.5, ...], then 0->1, get diff of results, use to predict result of hashes for faster A* search)
+#Sadly it all tends towards 0.5, as in with random inputs it will all be 0.5 less than a quarter of the way through.
 #Sadly, could not generate hash collisions using this method. Its predictive powers are 0% better than random :(
 
 #main function, takes array of size 512 of numbers 0<=x<=1
@@ -10,7 +10,6 @@ def generate_hash(inp):
     for x in range(512):
         input.append(inp[x])
     for x in range(512):
-        input[x]=int(input[x])
         if input[x]<0 or input[x]>1:
             return 'BAD_VALUE_AT_INDEX: '+str(x)
         
