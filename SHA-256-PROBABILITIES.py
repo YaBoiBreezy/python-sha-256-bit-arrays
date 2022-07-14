@@ -154,16 +154,9 @@ if __name__ == "__main__":
     while(len(hello_world)<512-8):
         hello_world.append(0)
     hello_world+=[0,1,0,1,1,0,0,0]
-    #print(generate_hash(hello_world))
+    print(generate_hash(hello_world))
 
     hold=[]
     for x in range(512):
-        hold.append(0.5)
-    hold[1]=0
-    h1=generate_hash(hold)
-    hold[1]=1
-    h2=generate_hash(hold)
-    h3=[]
-    for x in range(256):
-        h3.append(h1[x]-h2[x])
-    print(h3)
+        hold.append(random.random())
+    print(hash(hold))
